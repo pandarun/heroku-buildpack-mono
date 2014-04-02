@@ -62,6 +62,12 @@ export LD_LIBRARY_PATH="/app/mono/lib:${LD_LIBRARY_PATH}"
 cp -r ${LP_DIR}/.config ~/.
 cp -r ${LP_DIR}/.config ${BUILD_DIR}/.
 
+# update certs for nuget using mozroot
+mozroots --import --machine --sync
+certmgr -ssl -m https://go.microsoft.com
+certmgr -ssl -m https://nugetgallery.blob.core.windows.net
+certmgr -ssl -m https://nuget.org
+
 # Find all NuGet target files and overwrite with known good version
 find `pwd` -name "NuGet.targets" -exec cp -f ${CACHE_DIR}/NuGet.targets {} \;
 
