@@ -10,4 +10,4 @@ addons:[]
 default_process_types:
   web: /app/nginx/start
 EOF
-fi
+
