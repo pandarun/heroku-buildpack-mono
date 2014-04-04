@@ -7,7 +7,6 @@ BUILD_DIR=$1
 cat <<EOF
 ---
 addons: []
-default_process_types:
-  web: /app/nginx/start
+default_process_types: []
 EOF
 
