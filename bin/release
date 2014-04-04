@@ -7,6 +7,6 @@ BUILD_DIR=$1
 cat <<EOF
 ---
 addons: []
-default_process_types: []
+default_process_types: {}
 EOF
 
