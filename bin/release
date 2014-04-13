@@ -4,9 +4,16 @@
 # important directories: https://gist.github.com/fe7f04abbd9538b656c5
 BUILD_DIR=$1
 
+if [ -d "$BUILD_DIR/_PublishedWebsites/" ]; then
+cat <<EOF
+---
+default_process_types:
+  web: /app/nginx/start
+EOF
+else
 cat <<EOF
 ---
 addons: []
 default_process_types: {}
 EOF
-
+fi
