@@ -10,11 +10,8 @@ chmod 777 /tmp/nginx.socket
 touch /tmp/nginx2.socket
 chmod 777 /tmp/nginx2.socket
 MONO_OPTIONS=--server /app/xsp/bin/fastcgi-mono-server4 /applications=/:/app/_PublishedWebsites/`ls /app/_PublishedWebsites/ | head -1` /socket=unix:/tmp/nginx.socket &
-
-touch /tmp/nginx3.socket
-chmod 777 /tmp/nginx.socket
-/app/nginx/nginx -p /app/nginx -c /app/nginx/nginx.conf
-touch /tmp/nginx.socket
-chmod 777 /tmp/nginx.socket
+sleep 1
 touch /tmp/nginx3.socket
 chmod 777 /tmp/nginx3.socket
+chmod 777 /tmp/nginx.socket
+/app/nginx/nginx -p /app/nginx -c /app/nginx/nginx.conf
