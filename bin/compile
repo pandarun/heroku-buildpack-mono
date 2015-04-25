@@ -5,9 +5,9 @@
 set -e
 
 DEPENDENCY_S3_BUCKET_PATH="http://s3.amazonaws.com/mono-dependencies"
-MONO_VERSION="3.2.8"
+MONO_VERSION="3.12.0"
 XSP_VERSION="8a31bc625727594d42f94173768bee5cf8afd0a4"
-NGINX_VERSION="1.5.2"
+STACK="cedar-14"
 
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -29,7 +29,7 @@ cd ${BUILD_DIR}
 mkdir -p ${CACHE_DIR}
 
 MONO_CACHE_LOCATION=${CACHE_DIR}/mono-${MONO_VERSION}
-conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/mono-${MONO_VERSION}.tar.gz ${MONO_CACHE_LOCATION}
+conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/${STACK}/mono-${MONO_VERSION}.tar.gz ${MONO_CACHE_LOCATION}
 
 if [ ! -d "${CACHE_DIR}/NuGet.targets" ]; then
   echo "-----> Fetching fixed NuGet.targets"
@@ -83,12 +83,12 @@ cp -n ${LP_DIR}/.profile.d/* ${BUILD_DIR}/.profile.d/
 
 if [ -d "$BUILD_DIR/_PublishedWebsites/" ]; then
   XSP_CACHE_LOCATION=${CACHE_DIR}/xsp-${XSP_VERSION}
-  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/xsp-${XSP_VERSION}.tar.gz ${XSP_CACHE_LOCATION}
+  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/{STACK}/xsp-${XSP_VERSION}.tar.gz ${XSP_CACHE_LOCATION}
   cp -r ${XSP_CACHE_LOCATION}/xsp .
   cp -r ${XSP_CACHE_LOCATION}/xsp/lib/mono/gac/* ./mono/lib/mono/gac/
 
-  NGINX_CACHE_LOCATION=${CACHE_DIR}/nginx-{NGINX_VERSION}
-  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/nginx-${NGINX_VERSION}.tar.gz ${NGINX_CACHE_LOCATION}
+  NGINX_CACHE_LOCATION=${CACHE_DIR}/nginx
+  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/{STACK}/nginx.tar.gz ${NGINX_CACHE_LOCATION}
   mkdir -p ${BUILD_DIR}/nginx
   cp ${NGINX_CACHE_LOCATION}/nginx ${BUILD_DIR}/nginx/.
   cp ${LP_DIR}/nginx/* ${BUILD_DIR}/nginx/.
